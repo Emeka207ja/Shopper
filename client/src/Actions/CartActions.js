@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CART_ADD_ITEM } from "../ActionCreators/CartActionCreator"
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../ActionCreators/CartActionCreator"
 
 export const addToCartHandler = (id, qty) => async (dispatch, getState) => {
     try {
@@ -20,4 +20,10 @@ export const addToCartHandler = (id, qty) => async (dispatch, getState) => {
     } catch (error) {
         console.log(error)
     }
+}
+
+export const removeFromCartHandler = (idx) => async (dispatch, getState) => {
+    console.log("id",idx)
+    dispatch({ type: CART_REMOVE_ITEM, payload: idx })
+    localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems))
 }

@@ -17,7 +17,11 @@ const SignupScreen = () => {
     const navigate = useNavigate()
 
     const redirectLink = searchParam.get("redirect");
-    const redirect = redirectLink?redirectLink: ""
+    const redirect = redirectLink ? redirectLink : ""
+    
+    if (error) {
+        console.log("error",error)
+    }
     
     const signupHandler = (e) => {
         e.preventDefault();
@@ -25,7 +29,6 @@ const SignupScreen = () => {
         setName("");
         setEmail("");
         setPassword("");
-        navigate(`/${redirect}`)
     }
     useEffect(() => {
         if (userDetail?.token) {

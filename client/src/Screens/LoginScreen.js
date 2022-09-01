@@ -21,7 +21,6 @@ const LoginScreen = () => {
     const handleSubmit = (e) => {
           e.preventDefault()
         dispatch(userLoginHandler(email, password))
-        navigate(`/${redirect}`)
     }
 
     useEffect(() => {

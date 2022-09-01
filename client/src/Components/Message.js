@@ -3,7 +3,7 @@ import Alert from 'react-bootstrap/Alert';
 import { Link } from 'react-router-dom';
 
 const Message = ({ variant, text,optional }) => {
-    console.log("message",text)
+   
   return (
       <Alert variant={variant} className="text-center">
           {text}

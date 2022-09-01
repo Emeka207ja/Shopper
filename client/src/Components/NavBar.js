@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import {Link} from "react-router-dom"
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -9,8 +10,11 @@ import Button from 'react-bootstrap/Button';
 import {LinkContainer} from "react-router-bootstrap"
 
 function NavBar() {
+  const dispatch = useDispatch();
+  const {loginDetails} = useSelector(state=>state.loginDetails)
+  const {userDetail} = useSelector(state=>state.signupDetails)
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="navBar">
       <Container>
         <LinkContainer to="/">
            <Navbar.Brand>Shopper</Navbar.Brand>
@@ -26,15 +30,34 @@ function NavBar() {
             <LinkContainer to="/cart">
               <Nav.Link > <i className="fa-solid fa-cart-arrow-down me-1"></i>Cart</Nav.Link>
             </LinkContainer>
-            <NavDropdown title="Access" id="collasible-nav-dropdown">
-              <LinkContainer to="/register">
-                 <NavDropdown.Item> <i className="fa-solid fa-user me-1"></i>Register</NavDropdown.Item>
+            <NavDropdown title={loginDetails?.token? loginDetails?.name:userDetail?.token? userDetail.name: "Access"} id="collasible-nav-dropdown">
+              <LinkContainer to="/signup">
+                 <NavDropdown.Item> <i className="fa-solid fa-user me-1"></i>Signup</NavDropdown.Item>
               </LinkContainer>
-              <LinkContainer to="/login">
-                <NavDropdown.Item><i className="fa-solid fa-user me-1"></i>
-               Login
-              </NavDropdown.Item>
-              </LinkContainer>
+              {
+                loginDetails?.token || userDetail?.token? (
+                    <LinkContainer to={`/profile/${loginDetails?.id || userDetail?.id}`}>
+                        <NavDropdown.Item><i className="fa-solid fa-user me-1"></i>
+                          Profile
+                      </NavDropdown.Item>
+                  </LinkContainer>
+                ) : (
+                      <LinkContainer to="/signin">
+                          <NavDropdown.Item><i className="fa-solid fa-user me-1"></i>
+                              Signin
+                          </NavDropdown.Item>
+                      </LinkContainer>
+                   )
+              }
+              {/* {
+                userDetail?.token && (
+                    <LinkContainer to={`/profile/${userDetail?.id}`}>
+                        <NavDropdown.Item><i className="fa-solid fa-user me-1"></i>
+                          Profile
+                      </NavDropdown.Item>
+                  </LinkContainer>
+                )
+              } */}
               
               {/* <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
               <NavDropdown.Divider />

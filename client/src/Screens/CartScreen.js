@@ -33,7 +33,7 @@ const CartScreen = () => {
         dispatch(removeFromCartHandler(idx))
     }
     const navigateToShipping = () => {
-        navigate("/shipping")
+        navigate("/signin?redirect=shipping")
     }
   return (
     <>

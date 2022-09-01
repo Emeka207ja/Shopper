@@ -10,6 +10,9 @@ import ProductScreen from "./Screens/ProductScreen";
 import TestScreen from "./Screens/TestScreen";
 import CartScreen from "./Screens/CartScreen";
 import ShippingScreen from "./Screens/ShippingScreen";
+import SignupScreen from "./Screens/SignupScreen";
+import LoginScreen from "./Screens/LoginScreen";
+import UpdateProfileScreen from "./Screens/UpdateProfileScreen";
 function App() {
   return (
     < >
@@ -23,6 +26,10 @@ function App() {
             <Route path="/cart" element={<CartScreen />}/>
             <Route path="/cart/:id" element={<CartScreen />}/>
             <Route path="/shipping" exact element={<ShippingScreen />}/>
+            <Route path="/signup" exact element={<SignupScreen />}/>
+            <Route path="/signin" exact element={<LoginScreen />}/>
+            {/* <Route path="/signin?redirect=shipping" exact element={<LoginScreen />}/> */}
+            <Route path="/profile/:id" exact element={<UpdateProfileScreen />}/>
             <Route path="/test" exact element={<TestScreen />}/>
        </Routes>
         </Container>

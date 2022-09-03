@@ -1,6 +1,6 @@
 import axios from "axios"
 
-import { SIGNUP_FAIL, SIGNUP_REQUEST, SIGNUP_SUCCESS,SIGNIN_REQUEST,SIGNIN_SUCCESS,SIGNIN_FAIL, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAIL, FETCH_PROFILE_REQUEST,FETCH_PROFILE_SUCCESS,FETCH_PROFILE_FAIL } from "../ActionCreators/UserAccessActionCreator"
+import { SIGNUP_FAIL, SIGNUP_REQUEST, SIGNUP_SUCCESS,SIGNIN_REQUEST,SIGNIN_SUCCESS,SIGNIN_FAIL, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAIL, FETCH_PROFILE_REQUEST,FETCH_PROFILE_SUCCESS,FETCH_PROFILE_FAIL, SIGNIN_OUT } from "../ActionCreators/UserAccessActionCreator"
 
 export const userSignupHandler = (name, email, password) => async (dispatch, getState) => {
     try {
@@ -21,6 +21,14 @@ export const userLoginHandler = (email, password) => async (dispatch, getState) 
         dispatch({type:SIGNIN_SUCCESS,payload:data})
     } catch (error) {
         dispatch({type:SIGNIN_FAIL,payload:error.response.data.message})
+    }
+}
+export const userLogoutHandler = () => async (dispatch, getState) => {
+    try {
+        dispatch({ type: SIGNIN_OUT })
+        localStorage.removeItem("loggedIn")
+    } catch (error) {
+        console.log(error)
     }
 }
 export const updateProfileHandler = (name,email, password,id) => async (dispatch, getState) => {

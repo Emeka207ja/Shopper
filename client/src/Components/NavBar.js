@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import {Link} from "react-router-dom"
+import { userLogoutHandler } from '../Actions/UsersAction';
+import {useNavigate} from "react-router-dom"
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -11,8 +12,14 @@ import {LinkContainer} from "react-router-bootstrap"
 
 function NavBar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const {loginDetails} = useSelector(state=>state.loginDetails)
-  const {userDetail} = useSelector(state=>state.signupDetails)
+  const { userDetail } = useSelector(state => state.signupDetails)
+  
+  const logoutHandler = () => {
+    dispatch(userLogoutHandler())
+    navigate("/signin")
+  }
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="navBar">
       <Container>
@@ -30,10 +37,17 @@ function NavBar() {
             <LinkContainer to="/cart">
               <Nav.Link > <i className="fa-solid fa-cart-arrow-down me-1"></i>Cart</Nav.Link>
             </LinkContainer>
-            <NavDropdown title={loginDetails?.token? loginDetails?.name:userDetail?.token? userDetail.name: "Access"} id="collasible-nav-dropdown">
-              <LinkContainer to="/signup">
-                 <NavDropdown.Item> <i className="fa-solid fa-user me-1"></i>Signup</NavDropdown.Item>
-              </LinkContainer>
+            <NavDropdown title={loginDetails?.token ? loginDetails?.name : userDetail?.token ? userDetail.name : "Access"} id="collasible-nav-dropdown">
+              {
+                loginDetails?.token || userDetail?.token ? (
+                  <NavDropdown.Item> <i className="fa-solid fa-user me-1"></i><span onClick={logoutHandler}>Logout</span></NavDropdown.Item>
+                ) : (
+                      <LinkContainer to="/signup">
+                        <NavDropdown.Item> <i className="fa-solid fa-user me-1"></i>Signup</NavDropdown.Item>
+                      </LinkContainer>
+                   )
+              }
+             
               {
                 loginDetails?.token || userDetail?.token? (
                     <LinkContainer to={`/profile/${loginDetails?.id || userDetail?.id}`}>

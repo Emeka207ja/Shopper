@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../ActionCreators/CartActionCreator"
+import { CART_ADD_ITEM, CART_PAYMENT_METHOD, CART_REMOVE_ITEM,CART_SHIPPING_ADDRESS } from "../ActionCreators/CartActionCreator"
 
 export const addToCartHandler = (id, qty) => async (dispatch, getState) => {
     try {
@@ -26,4 +26,13 @@ export const removeFromCartHandler = (idx) => async (dispatch, getState) => {
     console.log("id",idx)
     dispatch({ type: CART_REMOVE_ITEM, payload: idx })
     localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems))
+}
+
+export const cartShippingAddress = (data) => (dispatch) => {
+    dispatch({ type: CART_SHIPPING_ADDRESS, payload: data });
+    localStorage.setItem("shippingAddress",JSON.stringify(data))
+}
+export const cartPaymentMethod = (paymentMethod) => (dispatch) => {
+    dispatch({ type: CART_PAYMENT_METHOD, payload: paymentMethod });
+    localStorage.setItem("paymentMethod",JSON.stringify(paymentMethod))
 }

@@ -20,6 +20,7 @@ const PaymentScreen = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(cartPaymentMethod(paymentMethod))
+    navigate("/placeorder")
   }
   return (
     <>

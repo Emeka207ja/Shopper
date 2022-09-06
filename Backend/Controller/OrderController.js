@@ -1,0 +1,34 @@
+
+import asyncHandler from "express-async-handler"
+import { Order } from "../Model/OderModel.js"
+
+const addOrderItems = asyncHandler(async (req, res) => {
+    const {
+        orderItems,
+        shippingAddress,
+        paymentMethod,
+        itemsPrice,
+        taxPrice,
+        shippingPrice,
+        totalPrice
+    } = req.body
+    if (orderItems && orderItems.length === 0) {
+        res.status(400);
+        throw new Error("no order item")
+    } else {
+        const order = await new Order({
+        orderItems,
+        user : req.user._id,
+        shippingAddress,
+        paymentMethod,
+        itemsPrice,
+        taxPrice,
+        shippingPrice,
+        totalPrice
+        })
+        const createOrder = await order.save()
+        res.status(201).json(createOrder)
+    }
+})
+
+export { addOrderItems}

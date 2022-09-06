@@ -1,6 +1,7 @@
 
 import express from "express"
-import { signInHandler, signUpHandler,updateProfileHandler,fetchProfileHandler } from "../Controller/UserController.js"
+import { signInHandler, signUpHandler, updateProfileHandler, fetchProfileHandler } from "../Controller/UserController.js"
+import { Protected } from "../Config/Protect.js";
 
 const userRoute = express.Router()
 

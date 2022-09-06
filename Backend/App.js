@@ -7,6 +7,7 @@ import { connectDb } from "./Config/DbConnect.js"
 import { notFound, errorHandler } from "./Middleware/ErrorMiddleware.js"
 import { productRouter } from "./Routes/ProductRoutes.js"
 import { userRoute } from "./Routes/UserRoutes.js"
+import { orderRoute } from "./Routes/OrderRoutes.js"
 const server = express()
 dotenv.config()
 connectDb()
@@ -15,6 +16,7 @@ const port = process.env.PORT
 server.use(express.json())
 server.use("/api/products",productRouter)
 server.use("/api/users",userRoute)
+server.use("/api/orders",orderRoute)
 const __dirname = path.resolve()
 if (process.env.NODE_ENV === 'production') {
     server.use(express.static(path.join(__dirname, '/client/build')))

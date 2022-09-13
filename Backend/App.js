@@ -13,6 +13,7 @@ dotenv.config()
 connectDb()
 
 const port = process.env.PORT
+
 server.use(express.json())
 server.use("/api/products",productRouter)
 server.use("/api/users",userRoute)

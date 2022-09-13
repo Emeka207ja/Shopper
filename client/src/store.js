@@ -4,7 +4,7 @@ import thunk from "redux-thunk"
 import { CartReducer } from './Reducers/CartReducer';
 import { fetchProductsReducer,fetchSingleProductReducer } from './Reducers/productReducer';
 import { SignupReducer, LoginReducer, UpdateProfileReducer, FetchProfileReducer } from './Reducers/UsersReducer';
-import { OrderReducer } from './Reducers/OrderReducer';
+import { OrderReducer,getOrderReducer,orderPayReducer,getPaypalClientIdReducer } from './Reducers/OrderReducer';
 
 const reducer = combineReducers({
     fetchProducts: fetchProductsReducer,
@@ -14,7 +14,10 @@ const reducer = combineReducers({
     loginDetails: LoginReducer,
     updateProfile: UpdateProfileReducer,
     fetchProfile: FetchProfileReducer,
-    order:OrderReducer
+    order: OrderReducer,
+    getOrder: getOrderReducer,
+    orderPay: orderPayReducer,
+    getPaypalClientId:getPaypalClientIdReducer
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")? JSON.parse(localStorage.getItem("cartItems")):[]

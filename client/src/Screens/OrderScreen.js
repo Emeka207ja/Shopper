@@ -1,59 +1,69 @@
-import React,{useEffect} from "react"
-import { Button, Row, Col, Card, Image, ListGroup, ListGroupItem } from "react-bootstrap"
+import React,{useEffect} from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import {useNavigate} from "react-router-dom"
-import {Link} from "react-router-dom"
-import CheckoutSteps from "../Components/CheckoutSteps"
+import { useParams, Link } from 'react-router-dom'
+import PaystackPop from '@paystack/inline-js'
+import {Row,Col,ListGroup,ListGroupItem,Card,Image,Button} from "react-bootstrap"
 import Message from "../Components/Message"
-import { createOrder } from "../Actions/OrderActions"
 import Loader from "../Components/Loader"
+import {getOrder,getPaystackClientId,orderPay} from "../Actions/OrderActions"
 
 
-
-const PlaceOrderScreen = () => {
+const OrderScreen = () => {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const { shippingAddress } = useSelector(state => state.cart)
-    const { paymentMethod } = useSelector(state => state.cart)
-    const { cartItems } = useSelector(state => state.cart)
-    const {loading,success,order,error} = useSelector(state=>state.order)
-    const addDecimal = (num) => {
-        return(Math.round(num*100)/100).toFixed(2)
-    }
-    const price =  addDecimal(cartItems?.reduce((acc, item) => acc + item.price * item.qty, 0))
-    const shipping =  addDecimal(price > 100 ? 0 : 100)
-    const tax = addDecimal(Number((0.15 * price).toFixed(2)))
-    const totalPrice = addDecimal((Number(price) + Number(shipping) + Number(tax)).toFixed(2))
-    
-    const placeOrder = ()=>{
-        dispatch(createOrder({
-            orderItems: cartItems,
-            shippingAddress,
-            paymentMethod,
-            itemsPrice: price,
-            shippingPrice: shipping,
-            taxPrice: tax,
-            totalPrice
-        }))
-    }
+    const {id} = useParams()
+    const { loading, orderItems, error } = useSelector(state => state.getOrder)
+    const { clientId,paypalError } = useSelector(state => state.getPaypalClientId)
+    console.log("paypal",clientId)
+    // console.log("error",error)
     useEffect(() => {
-        if (success) {
-            navigate(`/order/${order._id}`)
-        }
-    },[success])
-    return (
-        <>
-            <CheckoutSteps step1 step2 step3 step4 />
-            {loading&& <Loader/>}
-            {/* <h2>Place Order</h2> */}
-            <Row>
+        dispatch(getOrder(id))
+       
+    }, [dispatch, id])
+
+    useEffect(() => {
+         dispatch(getPaystackClientId())
+    }, [dispatch])
+    
+    const paymentHandler = (e) => {
+        e.preventDefault()
+        const paystack = new PaystackPop()
+        paystack.newTransaction({
+            key: clientId,
+            amount: orderItems?.totalPrice * 100,
+            email: orderItems?.user.email,
+            firstname: orderItems?.user.name,
+            onSuccess(transaction) {
+                dispatch(orderPay(id,
+                    transaction,
+                    orderItems?.user.email)
+                )
+                dispatch(getOrder(id))
+                console.log(transaction)
+            },
+            onCancel() {
+                console.log("cancelled")
+            }
+        })
+    }
+   
+  return (
+    <>
+          {
+              loading ? <Loader /> : error ? <Message text={error} variant="danger" /> : <div>
+                  <h2>Order:{id}</h2>
+                  <Row>
                 <Col md={8}>
                     <ListGroup variant="flush">
                         <ListGroupItem>
-                            <h2>Shipping</h2>
+                                  <h2>Shipping</h2>
+                                  <p>Name: {orderItems?.user.name}</p>
+                                 <p>Email:  <a href={`mailto:${orderItems?.user.email}`}>{orderItems?.user.email}</a></p>
                             <p>
                                 <strong>Address : </strong>
-                                {shippingAddress?.address}, {shippingAddress?.city},{shippingAddress?.postalCode} { " "},{shippingAddress?.country}
+                                {orderItems?.shippingAddress?.address}, {orderItems?.shippingAddress?.city},{orderItems?.shippingAddress?.postalCode} { " "},{orderItems?.shippingAddress?.country}
+                            </p>
+                            <p>
+                                      {orderItems?.isDelivered ? <Message text={ `deivererd on ${orderItems?.deliveredAt}`} variant="success" />:<Message text="Not Delivered" variant="danger"/>}
                             </p>
                         </ListGroupItem>
 
@@ -61,18 +71,21 @@ const PlaceOrderScreen = () => {
                             <h2>Payment</h2>
                             <p>
                                 <strong>Method : </strong>
-                                {paymentMethod}
+                                {orderItems?.paymentMethod}
                                 
+                            </p>
+                            <p>
+                                      {orderItems?.isPaid ? <Message text={ `paid on ${orderItems?.paidAt}`} variant="success" />:<Message text="Not Paid" variant="danger"/>}
                             </p>
                         </ListGroupItem>
 
                         <ListGroupItem>
                             <h2>Order Items</h2>
                             {
-                                cartItems?.length === 0 ? <Message text="Your have no order" /> : (
+                                orderItems?.cartItems?.length === 0 ? <Message text="Your have no order" /> : (
                                     <ListGroup variant="flush">
                                         {
-                                            cartItems?.map((cart,index) => {
+                                           orderItems?.orderItems?.map((cart,index) => {
                                                 return (
                                                     <ListGroupItem key={index}>
                                                         <Row>
@@ -107,37 +120,43 @@ const PlaceOrderScreen = () => {
                             <ListGroupItem>
                                 <Row>
                                     <Col>Items Price</Col>
-                                    <Col>${ price}</Col>
+                                          <Col>{orderItems?.itemsPrice }</Col>
                                 </Row>
                             </ListGroupItem>
                             <ListGroupItem>
                                 <Row>
                                     <Col>Shipping</Col>
-                                    <Col>${ shipping}</Col>
+                                    <Col>${orderItems?.shippingPrice}</Col>
                                 </Row>
                             </ListGroupItem>
                             <ListGroupItem>
                                 <Row>
                                     <Col>Tax</Col>
-                                    <Col>${ tax}</Col>
+                                    <Col>${ orderItems?.taxPrice}</Col>
                                 </Row>
                             </ListGroupItem>
                             <ListGroupItem>
                                 <Row>
                                     <Col>Total Price</Col>
-                                    <Col>${totalPrice}</Col>
+                                    <Col>${orderItems?.totalPrice}</Col>
                                 </Row>
                             </ListGroupItem>
                             <ListGroupItem>
-                                <Row>
-                                    <Button type="button" className="btn-block" disabled={cartItems.length===0} onClick={placeOrder} >Place Order</Button>
+                                {
+                                    !orderItems?.isPaid && <Row>
+                                    <Button type="button" className="btn-block" onClick={paymentHandler}>Pay with Paystack</Button>
                                 </Row>
+                                }
                             </ListGroupItem>
                         </ListGroup>
                    </Card>
                 </Col>
             </Row>
-        </>
-    )
+              </div>
+              
+      }
+    </>
+  )
 }
-export default PlaceOrderScreen
+
+export default OrderScreen

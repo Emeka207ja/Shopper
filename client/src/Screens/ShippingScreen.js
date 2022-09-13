@@ -50,7 +50,7 @@ const ShippingScreen = () => {
           <Form.Label>Country</Form.Label>
           <Form.Control type="text" value={country} onChange={(e)=>setCountry(e.target.value) } />
         </Form.Group>
-        <Button type="submit" className="form-control mt-2 bg-primary rounded">Countinue</Button>
+        <Button type="submit" className="form-control mt-2 bg-primary rounded">Continue</Button>
      </Form>
     </div>
   )

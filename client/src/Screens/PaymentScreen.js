@@ -30,7 +30,7 @@ const PaymentScreen = () => {
         <Form.Group>
           <Form.Label></Form.Label>
           <Col>
-            <Form.Check
+            {/* <Form.Check
               type="radio"
               label="Paypal or Credit Card"
               id="paypal"
@@ -38,26 +38,27 @@ const PaymentScreen = () => {
               value= "paypal"
               checked
               onChange={(e)=>setPaymentMethod(e.target.value)}
-            />
+            /> */}
             <Form.Check
               type="radio"
+              checked
               label="PayStack"
               id="PayStack"
               name="paymentMethod"
               value="payStack"
               onChange={(e)=>setPaymentMethod(e.target.value)}
             />
-            <Form.Check
+            {/* <Form.Check
               type="radio"
               label="GooglePay"
               id="GooglePay"
               name="paymentMethod"
               value="GooglePay"
               onChange={(e)=>setPaymentMethod(e.target.value)}
-            />
+            /> */}
           </Col>
        </Form.Group>
-        <Button type="submit">Countinue</Button>
+        <Button type="submit">Continue</Button>
       </Form>
     </>
   )

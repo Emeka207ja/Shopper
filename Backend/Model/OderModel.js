@@ -60,9 +60,9 @@ const orderSchema = mongoose.Schema({
         status: {
             type:String
         },
-        update_time: {
-            type:String
-        },
+        // update_time: {
+        //     type:String
+        // },
         email_address: {
             type:String
         }
@@ -84,6 +84,11 @@ const orderSchema = mongoose.Schema({
         required: true,
         default:0.0
         
+    },
+    itemsPrice: {
+        type: Number,
+        required: true,
+        default:0.0
     },
     isPaid: {
         type: Boolean,

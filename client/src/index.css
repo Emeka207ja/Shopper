@@ -42,3 +42,11 @@ h2{
 .order_id{
   word-break: break-all;
 }
+.payment_btn{
+  display: block;
+  background-color: black;
+  text-transform: uppercase;
+  color: white;
+  padding: 0.3rem;
+  border-radius: 6px;
+}

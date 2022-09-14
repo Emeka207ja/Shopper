@@ -39,3 +39,6 @@ h2{
   align-items: center;
 
 }
+.order_id{
+  word-break: break-all;
+}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogoutHandler } from '../Actions/UsersAction';
 import {useNavigate} from "react-router-dom"
@@ -18,8 +18,12 @@ function NavBar() {
   
   const logoutHandler = () => {
     dispatch(userLogoutHandler())
-    navigate("/signin")
   }
+  useEffect(() => {
+    if (!loginDetails?.token || !userDetail?.token) {
+      navigate("/signin")
+    }
+  },[loginDetails?.token, userDetail?.token])
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="navBar">
       <Container>

@@ -13,12 +13,17 @@ const OrderScreen = () => {
     const {id} = useParams()
     const { loading, orderItems, error } = useSelector(state => state.getOrder)
     const { clientId,paypalError } = useSelector(state => state.getPaypalClientId)
+    const {success } = useSelector(state => state.orderPay)
     console.log("paypal",clientId)
     // console.log("error",error)
     useEffect(() => {
         dispatch(getOrder(id))
+
+        if (success) {
+            dispatch(getOrder(id))
+        }
        
-    }, [dispatch, id])
+    }, [dispatch, id,success])
 
     useEffect(() => {
          dispatch(getPaystackClientId())
@@ -37,7 +42,7 @@ const OrderScreen = () => {
                     transaction,
                     orderItems?.user.email)
                 )
-                dispatch(getOrder(id))
+                // dispatch(getOrder(id))
                 console.log(transaction)
             },
             onCancel() {
@@ -50,7 +55,7 @@ const OrderScreen = () => {
     <>
           {
               loading ? <Loader /> : error ? <Message text={error} variant="danger" /> : <div>
-                  <h2>Order:{id}</h2>
+                  <h2 className="order_id">Order:{id}</h2>
                   <Row>
                 <Col md={8}>
                     <ListGroup variant="flush">
@@ -144,7 +149,7 @@ const OrderScreen = () => {
                             <ListGroupItem>
                                 {
                                     !orderItems?.isPaid && <Row>
-                                    <Button type="button" className="btn-block" onClick={paymentHandler}>Pay with Paystack</Button>
+                                    <Button type="submit" className="btn-block" onClick={paymentHandler}>Pay with Paystack</Button>
                                 </Row>
                                 }
                             </ListGroupItem>

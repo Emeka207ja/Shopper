@@ -130,7 +130,7 @@ const PlaceOrderScreen = () => {
                             </ListGroupItem>
                             <ListGroupItem>
                                 <Row>
-                                    <Button type="button" className="btn-block" disabled={cartItems.length===0} onClick={placeOrder} >Place Order</Button>
+                                    <Button type="submit" className="btn-block" disabled={cartItems.length===0} onClick={placeOrder} >Place Order</Button>
                                 </Row>
                             </ListGroupItem>
                         </ListGroup>

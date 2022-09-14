@@ -6,7 +6,7 @@ import CheckoutSteps from '../Components/CheckoutSteps'
 import {cartPaymentMethod} from "../Actions/CartActions"
 
 const PaymentScreen = () => {
-  const [paymentMethod, setPaymentMethod] = useState("paypal")
+  const [paymentMethod, setPaymentMethod] = useState("paystack")
   const { shippingAddress } = useSelector(state => state.cart)
   const dispatch = useDispatch()
   const navigate = useNavigate()

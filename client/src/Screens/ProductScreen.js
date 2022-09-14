@@ -33,7 +33,7 @@ const ProductScreen = () => {
     }
    
   return (
-      <div className='py-5'>
+      <div>
           {
               loading ? <Loader /> : error ? <Message text={error} variant="danger"/>:<Row>
               <Col  md={3}  >
@@ -85,7 +85,7 @@ const ProductScreen = () => {
                                           <Row>
                                               <Col>Qty</Col>
                                                <Col>
-                                              <Form.Select value ={qty} onChange={(e)=>setQty(e.target.value)}>
+                                              <Form.Select value ={qty} onChange={(e)=>setQty(e.target.value)} className='px-2'>
                                                   {
                                                           [...Array(Product?.[0]?.countInStock).keys()].map(x => {
                                                         return(

@@ -50,7 +50,6 @@ const getOrder = asyncHandler(async (req, res) => {
 
 const updateOrderToPaid = asyncHandler(async (req, res) => {
     const { paymentResult, email } = req.body
-    console.log(paymentResult,email)
     try {
         const order = await Order.findById(req.params.id)
         if (order) {

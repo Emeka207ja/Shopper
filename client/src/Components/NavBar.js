@@ -21,7 +21,7 @@ function NavBar() {
   }
   useEffect(() => {
     if (!loginDetails?.token || !userDetail?.token) {
-      navigate("/signin")
+      navigate("/")
     }
   },[loginDetails?.token, userDetail?.token])
   return (

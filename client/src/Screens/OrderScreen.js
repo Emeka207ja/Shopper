@@ -148,9 +148,9 @@ const OrderScreen = () => {
                             </ListGroupItem>
                             <ListGroupItem>
                                 {
-                                    !orderItems?.isPaid && <Row>
-                                    <button type="submit" className="payment_btn" onClick={paymentHandler}>Pay with Paystack</button>
-                                </Row>
+                                    !orderItems?.isPaid &&( <Row>
+                                    <Button type="submit" className="btn-block" onClick={paymentHandler}>Pay with Paystack</Button>
+                                </Row>)
                                 }
                             </ListGroupItem>
                         </ListGroup>

@@ -1,5 +1,5 @@
-import React,{useEffect} from "react"
-import { Button, Row, Col, Card, Image, ListGroup, ListGroupItem } from "react-bootstrap"
+import React,{useEffect,useState} from "react"
+import { Button, Row, Col, Card, Image, ListGroup, ListGroupItem,Form } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import {useNavigate} from "react-router-dom"
 import {Link} from "react-router-dom"
@@ -16,6 +16,7 @@ const PlaceOrderScreen = () => {
     const { shippingAddress } = useSelector(state => state.cart)
     const { paymentMethod } = useSelector(state => state.cart)
     const { cartItems } = useSelector(state => state.cart)
+    const [id,setId] = useState("")
     const {loading,success,order,error} = useSelector(state=>state.order)
     const addDecimal = (num) => {
         return(Math.round(num*100)/100).toFixed(2)
@@ -24,8 +25,14 @@ const PlaceOrderScreen = () => {
     const shipping =  addDecimal(price > 100 ? 0 : 100)
     const tax = addDecimal(Number((0.15 * price).toFixed(2)))
     const totalPrice = addDecimal((Number(price) + Number(shipping) + Number(tax)).toFixed(2))
+
+    // useEffect(() => {
+    //     if (order) {
+    //     setId(order?._id)
+    // }
+    // },[order?._id])
     
-    const placeOrder = ()=>{
+    const placeOrder = () => {
         dispatch(createOrder({
             orderItems: cartItems,
             shippingAddress,
@@ -35,10 +42,11 @@ const PlaceOrderScreen = () => {
             taxPrice: tax,
             totalPrice
         }))
+      
     }
     useEffect(() => {
         if (success) {
-            navigate(`/order/${order._id}`)
+            navigate(`/order/${order?._id}`)
         }
     },[success])
     return (
@@ -130,7 +138,7 @@ const PlaceOrderScreen = () => {
                             </ListGroupItem>
                             <ListGroupItem>
                                 <Row>
-                                    <Button  className="btn-block" type="submit" disabled={cartItems.length===0} onClick={placeOrder} >Place Order</Button>
+                                  <Button className="btn_click" type="submit" disabled={cartItems.length===0} onClick={placeOrder} >Place Order</Button>
                                 </Row>
                             </ListGroupItem>
                         </ListGroup>

@@ -50,3 +50,6 @@ h2{
   padding: 0.3rem;
   border-radius: 6px;
 }
+.btn_click{
+  cursor: pointer;
+}

@@ -2,7 +2,7 @@ import React,{useEffect} from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { useParams, Link } from 'react-router-dom'
 import PaystackPop from '@paystack/inline-js'
-import {Row,Col,ListGroup,ListGroupItem,Card,Image,Button} from "react-bootstrap"
+import {Row,Col,ListGroup,ListGroupItem,Card,Image,Button,Form} from "react-bootstrap"
 import Message from "../Components/Message"
 import Loader from "../Components/Loader"
 import {getOrder,getPaystackClientId,orderPay} from "../Actions/OrderActions"
@@ -149,7 +149,7 @@ const OrderScreen = () => {
                             <ListGroupItem>
                                 {
                                     !orderItems?.isPaid &&( <Row>
-                                    <Button type="submit" className="btn-block" onClick={paymentHandler}>Pay with Paystack</Button>
+                                    <Button type="submit" className="btn_click" onClick={paymentHandler}>Pay with Paystack</Button>
                                 </Row>)
                                 }
                             </ListGroupItem>

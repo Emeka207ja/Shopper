@@ -25,7 +25,7 @@ const OrderScreen = () => {
         }
        
     }, [dispatch, id,success])
-
+//  "pk_live_82ff0bcc3993f2d072dcd4fd326cfd1d4287aba9"
     // useEffect(() => {
     //      dispatch(getPaystackClientId())
     // }, [dispatch])
@@ -34,7 +34,7 @@ const OrderScreen = () => {
         e.preventDefault()
         const paystack = new PaystackPop()
         paystack.newTransaction({
-            key: "pk_live_82ff0bcc3993f2d072dcd4fd326cfd1d4287aba9",
+            key:clientId,
             amount: orderItems?.totalPrice * 100,
             email: orderItems?.user.email,
             firstname: orderItems?.user.name,

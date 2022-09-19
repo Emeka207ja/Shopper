@@ -1,4 +1,5 @@
-import React,{useEffect} from 'react'
+import React, { useEffect,useState } from 'react'
+import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams, Link } from 'react-router-dom'
 import PaystackPop from '@paystack/inline-js'
@@ -13,12 +14,32 @@ const OrderScreen = () => {
     const {id} = useParams()
     const { loading, orderItems, error } = useSelector(state => state.getOrder)
     const { clientId,paypalError } = useSelector(state => state.getPaypalClientId)
-    const {success } = useSelector(state => state.orderPay)
+    const { userDetail } = useSelector(state => state. signupDetails)
+    const { loginDetails } = useSelector(state => state. loginDetails)
+    const { success } = useSelector(state => state.orderPay)
+    const [paystackKey,setPaystackKey] = useState("")
     console.log("paypal",clientId)
-    console.log("id",clientId)
+    console.log("id", clientId)
+    
+     const fetchPaystackKey = async () => {
+       
+        try {
+            const Config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization : `Bearer ${loginDetails?.token || userDetail?.token}`
+                }
+            }
+            const { data } = await axios.get("/api/users/paystack",Config)
+            setPaystackKey(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     useEffect(() => {
         dispatch(getOrder(id))
-         dispatch(getPaystackClientId())
+        dispatch(getPaystackClientId())
+        fetchPaystackKey()
 
         if (success) {
             dispatch(getOrder(id))
@@ -29,12 +50,13 @@ const OrderScreen = () => {
     // useEffect(() => {
     //      dispatch(getPaystackClientId())
     // }, [dispatch])
+   
     
     const paymentHandler = (e) => {
         e.preventDefault()
         const paystack = new PaystackPop()
         paystack.newTransaction({
-            key:clientId,
+            key: paystackKey,
             amount: orderItems?.totalPrice * 100,
             email: orderItems?.user.email,
             firstname: orderItems?.user.name,

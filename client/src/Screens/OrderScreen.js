@@ -56,7 +56,7 @@ const OrderScreen = () => {
         e.preventDefault()
         const paystack = new PaystackPop()
         paystack.newTransaction({
-            key: paystackKey,
+            key: "pk_live_82ff0bcc3993f2d072dcd4fd326cfd1d4287aba9",
             amount: orderItems?.totalPrice * 100,
             email: orderItems?.user.email,
             firstname: orderItems?.user.name,

@@ -18,6 +18,7 @@ const OrderScreen = () => {
     // console.log("error",error)
     useEffect(() => {
         dispatch(getOrder(id))
+         dispatch(getPaystackClientId())
 
         if (success) {
             dispatch(getOrder(id))
@@ -25,9 +26,9 @@ const OrderScreen = () => {
        
     }, [dispatch, id,success])
 
-    useEffect(() => {
-         dispatch(getPaystackClientId())
-    }, [dispatch])
+    // useEffect(() => {
+    //      dispatch(getPaystackClientId())
+    // }, [dispatch])
     
     const paymentHandler = (e) => {
         e.preventDefault()

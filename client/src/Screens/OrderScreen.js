@@ -15,7 +15,7 @@ const OrderScreen = () => {
     const { clientId,paypalError } = useSelector(state => state.getPaypalClientId)
     const {success } = useSelector(state => state.orderPay)
     console.log("paypal",clientId)
-    // console.log("error",error)
+    console.log("id",clientId)
     useEffect(() => {
         dispatch(getOrder(id))
          dispatch(getPaystackClientId())
@@ -34,7 +34,7 @@ const OrderScreen = () => {
         e.preventDefault()
         const paystack = new PaystackPop()
         paystack.newTransaction({
-            key: clientId,
+            key: "pk_live_82ff0bcc3993f2d072dcd4fd326cfd1d4287aba9",
             amount: orderItems?.totalPrice * 100,
             email: orderItems?.user.email,
             firstname: orderItems?.user.name,

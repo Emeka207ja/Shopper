@@ -25,7 +25,7 @@ const OrderScreen = () => {
         }
        
     }, [dispatch, id,success])
-
+//  "pk_live_82ff0bcc3993f2d072dcd4fd326cfd1d4287aba9"
     // useEffect(() => {
     //      dispatch(getPaystackClientId())
     // }, [dispatch])
@@ -118,8 +118,8 @@ const OrderScreen = () => {
                     </ListGroup>
                 </Col>
                 <Col md={4}>
-                    <Card>
-                        <ListGroup variant="flush">
+                    <div className= "placeorder_card">
+                        {/* <ListGroup variant="flush">
                             <ListGroupItem>
                                 <h2>Order Summary</h2>
                             </ListGroupItem>
@@ -154,8 +154,8 @@ const OrderScreen = () => {
                                 </Row>)
                                 }
                             </ListGroupItem>
-                        </ListGroup>
-                              {/* <h5>Order Summary</h5>
+                        </ListGroup> */}
+                              <h5>Order Summary</h5>
                         <Row>
                             <Row>
                                 <Col><h5>Items Price</h5></Col>
@@ -182,8 +182,8 @@ const OrderScreen = () => {
                                 }
                             </Col>
                             </Row>
-                        </Row> */}
-                   </Card>
+                        </Row>
+                   </div>
                 </Col>
             </Row>
               </div>

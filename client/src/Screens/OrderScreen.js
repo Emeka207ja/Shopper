@@ -117,8 +117,8 @@ const OrderScreen = () => {
                     </ListGroup>
                 </Col>
                 <Col md={4}>
-                    <Card>
-                        <ListGroup variant="flush">
+                    <div className= "placeorder_card">
+                        {/* <ListGroup variant="flush">
                             <ListGroupItem>
                                 <h2>Order Summary</h2>
                             </ListGroupItem>
@@ -153,8 +153,36 @@ const OrderScreen = () => {
                                 </Row>)
                                 }
                             </ListGroupItem>
-                        </ListGroup>
-                   </Card>
+                        </ListGroup> */}
+                              <h5>Order Summary</h5>
+                        <Row>
+                            <Row>
+                                <Col><h5>Items Price</h5></Col>
+                                <Col><h5>{orderItems?.itemsPrice }</h5></Col>
+                            </Row>
+                            <Row>
+                                <Col><h5>Shipping</h5></Col>
+                                <Col><h5>${orderItems?.shippingPrice}</h5></Col>
+                            </Row>
+                            <Row>
+                                <Col><h5>Tax</h5></Col>
+                                <Col><h5>${ orderItems?.taxPrice}</h5></Col>
+                            </Row>
+                            <Row>
+                                <Col><h5>Total Price</h5></Col>
+                                <Col><h5>${orderItems?.totalPrice}</h5></Col>
+                            </Row>
+                            <Row>
+                            <Col>
+                                {
+                                    !orderItems?.isPaid &&( <Row>
+                                        <button type="submit" className="btn_click" onClick={paymentHandler}>Pay with Paystack</button>
+                                    </Row>)
+                                }
+                            </Col>
+                            </Row>
+                        </Row>
+                   </div>
                 </Col>
             </Row>
               </div>

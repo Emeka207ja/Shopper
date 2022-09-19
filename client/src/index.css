@@ -53,3 +53,20 @@ h2{
 .btn_click{
   cursor: pointer;
 }
+.placeorder_card{
+  padding: 2rem;
+  border: 1px solid blue;
+  border-radius: 10px;
+}
+.placeorder_card button{
+  padding: 0.3rem;
+  background-color: black;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 10px;
+}
+.placeorder_card h5{
+  font-size: 13px;
+  padding: 0.4rem;
+  font-family:serif;
+}

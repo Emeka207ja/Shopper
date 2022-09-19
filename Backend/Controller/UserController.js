@@ -105,6 +105,6 @@ const fetchProfileHandler = asyncHandler(async (req, res) => {
 })
 
 const sendPaystack = asyncHandler(async (req, res) => {
-    res.status(200).json(process.env.PAYSTACK_CLIENT_ID)
+    res.status(200).json(process.env.PAYSTACK_PUBLIC_KEY)
 })
 export {signInHandler,signUpHandler,updateProfileHandler,fetchProfileHandler,sendPaystack}

@@ -107,8 +107,8 @@ const PlaceOrderScreen = () => {
                     </ListGroup>
                 </Col>
                 <Col md={4}>
-                    <div className="placeorder_card">
-                        {/* <ListGroup variant="flush">
+                    <Card>
+                        <ListGroup variant="flush">
                             <ListGroupItem>
                                 <h2>Order Summary</h2>
                             </ListGroupItem>
@@ -141,7 +141,7 @@ const PlaceOrderScreen = () => {
                                   <Button className="btn_click" type="submit" disabled={cartItems.length===0} onClick={placeOrder} >Place Order</Button>
                                 </Row>
                             </ListGroupItem>
-                        </ListGroup> */}
+                        </ListGroup>
                         <Row>
                              <Col><h5>Items Price</h5></Col>
                             <Col><h5>${ price}</h5></Col>
@@ -161,7 +161,7 @@ const PlaceOrderScreen = () => {
                         <Row>
                             <button className="btn_click" type="submit" disabled={cartItems.length===0} onClick={placeOrder} >Place Order</button>
                         </Row>
-                   </div>
+                   </Card>
                 </Col>
             </Row>
         </>
